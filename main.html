@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Eyes on Me</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Mrs+Saint+Delafield&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f9f7f5;
+    color: #333;
+    line-height: 1.6;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(249,247,245,0.7) 100%);
+    z-index: -1;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 40px 25px;
+    position: relative;
+}
+
+h1, h2 {
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+h1 {
+    color: #222;
+    font-size: 3.5rem;
+    font-weight: 300;
+    font-family: "Mrs Saint Delafield", cursive;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #777;
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    font-family: "Cormorant Garamond", serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.instructions {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    margin: 30px 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    color: #555;
+    border: 1px solid rgba(230, 230, 230, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instructions:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.instructions p {
+    margin-bottom: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    position: relative;
+    padding-left: 25px;
+}
+
+.instructions p:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #bd9a6c 0%, #dfbd96 100%);
+}
+
+.btn {
+    background: linear-gradient(135deg, #222 0%, #444 100%);
+    color: white;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 40px auto;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 400;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: all 0.6s;
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #000 0%, #333 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover:before {
+    left: 100%;
+}
+
+.secondary-btn {
+    background: linear-gradient(135deg, #666 0%, #888 100%);
+    margin-top: 15px;
+}
+
+.secondary-btn:hover {
+    background: linear-gradient(135deg, #555 0%, #777 100%);
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 35px 0;
+}
+
+.filter-btn {
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #222 0%, #444 100%);
+    border-color: #222;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Pages */
+.page {
+    display: none;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page.active {
+    display: block;
+}
+
+/* Camera Page */
+.camera-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid white;
+    transition: transform 0.3s ease;
+}
+
+.camera-container:hover {
+    transform: scale(1.02);
+}
+
+#camera-feed {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-color: #000;
+    display: block;
+    transform: scaleX(-1);
+}
+
+.countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 6rem;
+    color: white;
+    font-weight: 300;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    display: none;
+}
+
+.thumbnails {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.thumbnail {
+    flex: 1;
+    aspect-ratio: 4/3;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: 2px solid white;
+}
+
+.thumbnail:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Layout Page */
+.layout-options {
+    display: flex;
+    justify-content: space-around;
+    margin: 35px 0;
+}
+
+.layout-option {
+    text-align: center;
+    cursor: pointer;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+    transition: all 0.3s;
+    background-color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.layout-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.layout-option.selected {
+    border-color: #222;
+    background-color: rgba(0, 0, 0, 0.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.layout-preview {
+    width: 90px;
+    height: 160px; /* 9:16 aspect ratio */
+    background-color: #f8f8f8;
+    margin: 0 auto 15px;
+    border: 1px solid #eee;
+    padding: 2px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.layout-4x1 {
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-4x1 .preview-cell {
+    height: 25%;
+    background-color: #ddd;
+    margin: 2px;
+}
+
+.layout-2x2 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.layout-2x2 .preview-cell {
+    width: calc(50% - 4px);
+    height: calc(50% - 4px);
+    background-color: #ddd;
+    margin: 2px;
+    float: left;
+}
+
+.layout-4x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 2px;
+}
+
+.layout-4x2 .preview-cell {
+    background-color: #ddd;
+    width: 100%;
+    height: 100%;
+}
+
+.color-picker {
+    text-align: center;
+    margin: 35px 0;
+}
+
+.color-picker label {
+    display: block;
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+}
+
+.color-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.color-btn {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.color-btn:hover {
+    transform: scale(1.15);
+    border: 2px solid #333;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.color-btn.selected {
+    border: 3px solid #222;
+    box-shadow: 0 0 0 4px rgba(34, 34, 34, 0.1);
+}
+
+.output-options {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 35px 0;
+}
+
+.output-options label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.preview-container {
+    margin: 40px auto;
+    width: 300px; /* Increased size for better quality */
+    height: 533px; /* Maintained 9:16 aspect ratio */
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border: 5px solid white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.preview-container:hover {
+    transform: scale(1.03);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+#final-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button-group .btn {
+    margin: 15px 0;
+}
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.nav-btn {
+    background: linear-gradient(135deg, #888 0%, #aaa 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: all 0.6s;
+}
+
+.nav-btn:hover {
+    background: linear-gradient(135deg, #777 0%, #999 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn:hover:before {
+    left: 100%;
+}
+
+/* Custom checkbox/radio styling */
+input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    transition: all 0.3s;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="radio"]:checked {
+    border-color: #222;
+    background-color: #fff;
+}
+
+input[type="radio"]:checked:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #222;
+}
+
+/* Additional luxurious elements */
+.container:after {
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: 1px solid rgba(189, 154, 108, 0.2);
+    border-radius: 50%;
+    top: -50px;
+    right: -50px;
+    z-index: -1;
+}
+
+.container:before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(189, 154, 108, 0.2);
+    border-radius: 50%;
+    bottom: -30px;
+    left: -30px;
+    z-index: -1;
+}
+
+/* Subtle background pattern */
+body:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(189, 154, 108, 0.03) 1%, transparent 1%),
+        radial-gradient(circle at 75% 75%, rgba(189, 154, 108, 0.03) 1%, transparent 1%);
+    background-size: 50px 50px;
+    z-index: -2;
+}
+
+/* Glassmorphism effect on select elements */
+.filter-buttons, .layout-options, .color-picker, .output-options {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+    </style>
+</head>
+<body>
+    <!-- Main Page -->
+    <div id="main-page" class="page active">
+        <div class="container">
+            <h1>All Eyes on Me</h1>
+            <h2>Take pics with your friends</h2>
+            
+            <div class="instructions">
+                <p>1. Select a filter for your photos</p>
+                <p>2. Capture 4 moments with our live camera</p>
+                <p>3. Choose layout and customize</p>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="normal">Classic</button>
+                <button class="filter-btn" data-filter="grayscale">Monochrome</button>
+                <button class="filter-btn" data-filter="sepia">Vintage</button>
+                <button class="filter-btn" data-filter="pink">Blush</button>
+                <button class="filter-btn" data-filter="blue">Azure</button>
+            </div>
+            
+            <button id="start-btn" class="btn">Begin Session</button>
+        </div>
+    </div>
+    
+    <!-- Camera Page -->
+    <div id="camera-page" class="page">
+        <div class="container">
+            <h1>Capture Moments</h1>
+            <h2>4 photos will be taken automatically</h2>
+            
+            <div class="camera-container">
+                <video id="camera-feed" autoplay playsinline></video>
+                <div id="countdown" class="countdown">3</div>
+            </div>
+            
+            <div class="thumbnails">
+                <div class="thumbnail" id="thumbnail-1"></div>
+                <div class="thumbnail" id="thumbnail-2"></div>
+                <div class="thumbnail" id="thumbnail-3"></div>
+                <div class="thumbnail" id="thumbnail-4"></div>
+            </div>
+            
+            <button id="capture-btn" class="btn">Capture</button>
+            <button id="continue-btn" class="btn" style="display: none;">Continue</button>
+            <button id="retake-btn" class="btn secondary-btn" style="display: none;">Retake Photos</button>
+            
+            <div class="nav-buttons">
+                <button id="back-to-main-btn" class="nav-btn">Back to Home</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Layout Page -->
+    <div id="layout-page" class="page">
+        <div class="container">
+            <h1>Design Your Strip</h1>
+            <h2>Select layout, background, and format</h2>
+            
+            <div class="layout-options">
+                <div class="layout-option selected" data-layout="4x1">
+                    <div class="layout-preview">
+                        <div class="layout-4x1">
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                        </div>
+                    </div>
+                    <p>Vertical</p>
+                </div>
+                <div class="layout-option" data-layout="2x2">
+                    <div class="layout-preview">
+                        <div class="layout-2x2">
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                        </div>
+                    </div>
+                    <p>Grid</p>
+                </div>
+                <div class="layout-option" data-layout="4x2">
+                    <div class="layout-preview">
+                        <div class="layout-4x2">
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                            <div class="preview-cell"></div>
+                        </div>
+                    </div>
+                    <p>4x2 Grid</p>
+                </div>
+                
+            </div>
+            
+            <div class="color-picker">
+                <label>Select Background Color</label>
+                <div class="color-buttons">
+                    <button class="color-btn" data-color="#ffffff" style="background-color: #ffffff;"></button>
+                    <button class="color-btn" data-color="#f8f8f8" style="background-color: #f8f8f8;"></button>
+                    <button class="color-btn" data-color="#e0e0e0" style="background-color: #e0e0e0;"></button>
+                    <button class="color-btn" data-color="#000000" style="background-color: #000000;"></button>
+                    <button class="color-btn" data-color="#ffcccc" style="background-color: #ffcccc;"></button>
+                    <button class="color-btn" data-color="#cce6ff" style="background-color: #cce6ff;"></button>
+                </div>
+            </div>
+            
+            
+            <div class="output-options">
+                <div>
+                    <input type="radio" id="static-option" name="output-type" value="static" checked>
+                    <label for="static-option">Static Image</label>
+                </div>
+                <div>
+                    <input type="radio" id="gif-option" name="output-type" value="gif">
+                    <label for="gif-option">Animated GIF</label>
+                </div>
+            </div>
+            
+            <div class="preview-container">
+                <canvas id="final-preview" width="900" height="1600"></canvas>
+            </div>
+            
+            <button id="download-btn" class="btn">Download</button>
+            
+            <div class="nav-buttons">
+                <button id="back-to-camera-btn" class="nav-btn">Back to Camera</button>
+                <button id="back-to-home-btn" class="nav-btn">Back to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
+    <script>
+        // Global variables
+        let currentPage = 'main-page';
+        let selectedFilter = 'normal';
+        let capturedImages = [];
+        let layout = '4x1';
+        let backgroundColor = '#ffffff';
+        let outputType = 'static';
+        let videoStream = null;
+        let captureCanvas = document.createElement('canvas');
+        let captureContext = captureCanvas.getContext('2d');
+        
+        // DOM Elements
+        const mainPage = document.getElementById('main-page');
+        const cameraPage = document.getElementById('camera-page');
+        const layoutPage = document.getElementById('layout-page');
+        const startBtn = document.getElementById('start-btn');
+        const captureBtn = document.getElementById('capture-btn');
+        const continueBtn = document.getElementById('continue-btn');
+        const retakeBtn = document.getElementById('retake-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const cameraFeed = document.getElementById('camera-feed');
+        const countdown = document.getElementById('countdown');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const layoutOptions = document.querySelectorAll('.layout-option');
+        const bgColorPicker = document.getElementById('bg-color');
+        const outputOptions = document.querySelectorAll('input[name="output-type"]');
+        const finalPreview = document.getElementById('final-preview');
+        const finalPreviewContext = finalPreview.getContext('2d');
+        const backToMainBtn = document.getElementById('back-to-main-btn');
+        const backToCameraBtn = document.getElementById('back-to-camera-btn');
+        const backToHomeBtn = document.getElementById('back-to-home-btn');
+        
+        // Event Listeners
+        startBtn.addEventListener('click', startPhotobooth);
+        captureBtn.addEventListener('click', startCapture);
+        continueBtn.addEventListener('click', goToLayoutPage);
+        retakeBtn.addEventListener('click', resetCapture);
+        downloadBtn.addEventListener('click', savePhotoStrip);
+        backToMainBtn.addEventListener('click', () => goToMainPage());
+        backToCameraBtn.addEventListener('click', () => goToCameraPage());
+        backToHomeBtn.addEventListener('click', () => goToMainPage());
+        
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedFilter = btn.dataset.filter;
+                
+                // Update live camera filter when on camera page
+                if (currentPage === 'camera-page' && videoStream) {
+                    applyFilterToVideo();
+                }
+            });
+        });
+        
+        layoutOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                layoutOptions.forEach(o => o.classList.remove('selected'));
+                option.classList.add('selected');
+                layout = option.dataset.layout;
+                updatePreview();
+            });
+        });
+        
+        // Get all color buttons
+        const colorButtons = document.querySelectorAll('.color-btn');
+
+        // Function to change background color when a button is clicked
+        colorButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove "selected" class from all buttons
+                colorButtons.forEach(btn => btn.classList.remove('selected'));
+
+                // Add "selected" class to clicked button
+                button.classList.add('selected');
+
+                // Set new background color
+                backgroundColor = button.dataset.color;
+                updatePreview(); // Update the layout preview
+            });
+        });
+
+        // Set default selected color (white)
+        document.querySelector('.color-btn[data-color="#ffffff"]').classList.add('selected');
+
+                
+        outputOptions.forEach(option => {
+            option.addEventListener('change', () => {
+                outputType = option.value;
+            });
+        });
+        
+        // Functions
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+        }
+        
+        // Apply selected filter to live video
+        function applyFilterToVideo() {
+            let filterStyle = '';
+            switch (selectedFilter) {
+                case 'grayscale':
+                    filterStyle = 'grayscale(100%)';
+                    break;
+                case 'sepia':
+                    filterStyle = 'sepia(80%)';
+                    break;
+                case 'pink':
+                    filterStyle = 'saturate(1.2) hue-rotate(330deg)';
+                    break;
+                case 'blue':
+                    filterStyle = 'saturate(1.1) hue-rotate(180deg)';
+                    break;
+                default:
+                    filterStyle = 'none';
+            }
+            cameraFeed.style.filter = filterStyle;
+        }
+        
+        async function startPhotobooth() {
+            showPage('camera-page');
+            
+            try {
+                videoStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        width: { ideal: 1920 },
+                        height: { ideal: 1080 }
+                    } 
+                });
+                cameraFeed.srcObject = videoStream;
+                
+                // Set canvas size to match video dimensions (4:3 aspect ratio) with high resolution
+                captureCanvas.width = 1280;
+                captureCanvas.height = 960;
+                
+                // Apply filter to live video
+                applyFilterToVideo();
+            } catch (err) {
+                alert('Camera access error: ' + err.message);
+                showPage('main-page');
+            }
+        }
+        
+        function startCapture() {
+            captureBtn.disabled = true;
+            countdown.style.display = 'block';
+            
+            let count = 3;
+            countdown.textContent = count;
+            
+            const countdownInterval = setInterval(() => {
+                count--;
+                countdown.textContent = count;
+                
+                if (count === 0) {
+                    clearInterval(countdownInterval);
+                    capturePhotos();
+                }
+            }, 1000);
+        }
+        
+        function capturePhotos() {
+    capturedImages = [];
+    let photoCount = 0;
+
+    const takePhoto = () => {
+        photoCount++;
+
+        // Apply filter before capturing the frame
+        let filterStyle = '';
+        switch (selectedFilter) {
+            case 'grayscale':
+                filterStyle = 'grayscale(100%)';
+                break;
+            case 'sepia':
+                filterStyle = 'sepia(80%)';
+                break;
+            case 'pink':
+                filterStyle = 'saturate(1.2) hue-rotate(330deg)';
+                break;
+            case 'blue':
+                filterStyle = 'saturate(1.1) hue-rotate(180deg)';
+                break;
+            default:
+                filterStyle = 'none';
+        }
+
+        captureContext.filter = filterStyle; // Apply filter
+        
+        captureContext.save();
+        captureContext.translate(captureCanvas.width, 0); // Move context to the right
+        captureContext.scale(-1, 1); // Flip horizontally
+        captureContext.drawImage(cameraFeed, 0, 0, captureCanvas.width, captureCanvas.height);
+        captureContext.restore();
+
+        const photo = captureCanvas.toDataURL('image/jpeg', 0.95);
+        capturedImages.push(photo);
+
+        // Display in thumbnail
+        const thumbnail = document.getElementById(`thumbnail-${photoCount}`);
+        thumbnail.innerHTML = `<img src="${photo}" alt="Photo ${photoCount}">`;
+
+        countdown.textContent = `${photoCount} / 4`;
+
+        if (photoCount === 4) {
+            countdown.style.display = 'none';
+            captureBtn.style.display = 'none';
+            continueBtn.style.display = 'block';
+            retakeBtn.style.display = 'block';
+            return;
+        }
+
+        setTimeout(takePhoto, 1500);
+    };
+
+    takePhoto();
+}
+
+        
+        function resetCapture() {
+            // Reset thumbnails
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`thumbnail-${i}`).innerHTML = '';
+            }
+            
+            // Reset buttons
+            captureBtn.style.display = 'block';
+            captureBtn.disabled = false;
+            continueBtn.style.display = 'none';
+            retakeBtn.style.display = 'none';
+            
+            // Clear captured images
+            capturedImages = [];
+        }
+        
+        function goToLayoutPage() {
+            showPage('layout-page');
+            updatePreview();
+        }
+        
+        function goToCameraPage() {
+            // If video stream was stopped, restart it
+            if (!videoStream || videoStream.getTracks()[0].readyState === 'ended') {
+                startPhotobooth();
+            } else {
+                showPage('camera-page');
+                applyFilterToVideo();
+            }
+        }
+        
+        function goToMainPage() {
+            // Stop camera stream if active
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+            
+            // Reset capture state
+            resetCapture();
+            
+            showPage('main-page');
+        }
+        
+        function updatePreview() {
+            // Clear canvas
+            finalPreviewContext.fillStyle = backgroundColor;
+            finalPreviewContext.fillRect(0, 0, finalPreview.width, finalPreview.height);
+            
+            if (capturedImages.length === 0) return;
+            
+            // Load images
+            const photos = [];
+            let loadedCount = 0;
+            
+            capturedImages.forEach((src, index) => {
+                const img = new Image();
+                img.onload = () => {
+                    photos[index] = img;
+                    loadedCount++;
+                    
+                    if (loadedCount === 4) {
+                        drawLayout(photos);
+                    }
+                };
+                img.src = src;
+            });
+        }
+        
+        function drawLayout(photos) {
+            // Set some variables for the layout
+            const canvas = finalPreview;
+            const ctx = finalPreviewContext;
+            const canvasWidth = canvas.width;
+            const canvasHeight = canvas.height;
+            const padding = 45; // Space between photos and edges
+            const spacing = 30; // Space between photos
+            
+            // Clear and fill background
+            ctx.fillStyle = backgroundColor;
+            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            
+            if (layout === '4x1') {
+                // Vertical strip layout (4 photos in a column)
+                const availableHeight = canvasHeight - (padding * 2) - (spacing * 3);
+                const photoHeight = availableHeight / 4;
+                const photoWidth = canvasWidth - (padding * 2);
+                
+                photos.forEach((photo, index) => {
+                    // Calculate position
+                    const y = padding + (index * (photoHeight + spacing));
+                    
+                    // Calculate proper aspect ratio (4:3 for photos)
+                    const aspectRatio = photo.width / photo.height;
+                    let drawWidth, drawHeight, xOffset = 0, yOffset = 0;
+                    
+                    // Determine if width or height is the limiting factor
+                    if (photoWidth / photoHeight > aspectRatio) {
+                        // Height is limiting, use full height and calculate width
+                        drawHeight = photoHeight;
+                        drawWidth = photoHeight * aspectRatio;
+                        xOffset = (photoWidth - drawWidth) / 2; // Center horizontally
+                    } else {
+                        // Width is limiting, use full width and calculate height
+                        drawWidth = photoWidth;
+                        drawHeight = photoWidth / aspectRatio;
+                        yOffset = (photoHeight - drawHeight) / 2; // Center vertically
+                    }
+                    
+                    // Draw the photo with proper aspect ratio
+                    ctx.drawImage(photo, padding + xOffset, y + yOffset, drawWidth, drawHeight);
+                });
+            } else if (layout === '4x2') {
+                // 4x2 layout logic
+                const availableWidth = canvasWidth - (padding * 2) - spacing;
+                const availableHeight = canvasHeight - (padding * 2) - (spacing * 3);
+                const photoWidth = availableWidth / 2;
+                const photoHeight = availableHeight / 4;
+
+                // Define positions for each photo (duplicating each one)
+                const positions = [
+                    { x: padding, y: padding }, { x: padding + photoWidth + spacing, y: padding },  // 1 1
+                    { x: padding, y: padding + photoHeight + spacing }, { x: padding + photoWidth + spacing, y: padding + photoHeight + spacing }, // 2 2
+                    { x: padding, y: padding + 2 * (photoHeight + spacing) }, { x: padding + photoWidth + spacing, y: padding + 2 * (photoHeight + spacing) }, // 3 3
+                    { x: padding, y: padding + 3 * (photoHeight + spacing) }, { x: padding + photoWidth + spacing, y: padding + 3 * (photoHeight + spacing) } // 4 4
+                ];
+
+                photos.forEach((photo, index) => {
+                    const pos1 = positions[index * 2];     // Left column
+                    const pos2 = positions[index * 2 + 1]; // Right column
+                    
+                    // Draw photo twice (one in each column)
+                    ctx.drawImage(photo, pos1.x, pos1.y, photoWidth, photoHeight);
+                    ctx.drawImage(photo, pos2.x, pos2.y, photoWidth, photoHeight);
+                });
+            }
+            else {
+                // 2x2 grid layout
+                const availableWidth = canvasWidth - (padding * 2) - spacing;
+                const availableHeight = canvasHeight - (padding * 2) - spacing;
+                const photoWidth = availableWidth / 2;
+                const photoHeight = availableHeight / 2;
+                
+                // Positions for the 4 photos [top-left, top-right, bottom-left, bottom-right]
+                const positions = [
+                    { x: padding, y: padding },
+                    { x: padding + photoWidth + spacing, y: padding },
+                    { x: padding, y: padding + photoHeight + spacing },
+                    { x: padding + photoWidth + spacing, y: padding + photoHeight + spacing }
+                ];
+                
+                photos.forEach((photo, index) => {
+                    const pos = positions[index];
+                    
+                    // Calculate proper aspect ratio (4:3 for photos)
+                    const aspectRatio = photo.width / photo.height;
+                    let drawWidth, drawHeight, xOffset = 0, yOffset = 0;
+                    
+                    // Determine if width or height is the limiting factor
+                    if (photoWidth / photoHeight > aspectRatio) {
+                        // Height is limiting, use full height and calculate width
+                        drawHeight = photoHeight;
+                        drawWidth = photoHeight * aspectRatio;
+                        xOffset = (photoWidth - drawWidth) / 2; // Center horizontally
+                    } else {
+                        // Width is limiting, use full width and calculate height
+                        drawWidth = photoWidth;
+                        drawHeight = photoWidth / aspectRatio;
+                        yOffset = (photoHeight - drawHeight) / 2; // Center vertically
+                    }
+                    
+                    // Draw the photo with proper aspect ratio
+                    ctx.drawImage(photo, pos.x + xOffset, pos.y + yOffset, drawWidth, drawHeight);
+                });
+            }
+        }
+        
+        function savePhotoStrip() {
+            if (outputType === 'static') {
+                // Save as static image - high resolution
+                const link = document.createElement('a');
+                link.download = 'luxe-photobooth.png';
+                link.href = finalPreview.toDataURL('image/png');
+                link.click();
+            } else {
+                // Show loading status
+                downloadBtn.textContent = 'Creating GIF...';
+                downloadBtn.disabled = true;
+                
+                // Create a new GIF with high quality
+                const gif = new GIF({
+                    workers: 2,
+                    quality: 5, // Lower number = higher quality
+                    width: finalPreview.width,
+                    height: finalPreview.height,
+                    workerScript: 'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
+                });
+                
+                // For better GIF processing, create individual photo frames
+                const processPhotos = () => {
+                    // Create a canvas for each frame
+                    for (let i = 0; i < capturedImages.length; i++) {
+                        // First create an image from each captured photo
+                        const img = new Image();
+                        img.onload = function() {
+                            // Create a new canvas for this frame
+                            const frameCanvas = document.createElement('canvas');
+                            frameCanvas.width = finalPreview.width;
+                            frameCanvas.height = finalPreview.height;
+                            const frameCtx = frameCanvas.getContext('2d');
+                            
+                            // Draw background
+                            frameCtx.fillStyle = backgroundColor;
+                            frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
+                            
+                            // Center the photo
+                            const photoWidth = frameCanvas.width - 90; // Add padding
+                            const photoHeight = photoWidth * (img.height / img.width);
+                            const xPos = (frameCanvas.width - photoWidth) / 2;
+                            const yPos = (frameCanvas.height - photoHeight) / 2;
+                            
+                            // Draw the image
+                            frameCtx.drawImage(img, xPos, yPos, photoWidth, photoHeight);
+                            
+                            // Add frame to GIF
+                            gif.addFrame(frameCanvas, { delay: 800, copy: true });
+                            
+                            // If this is the last image, render the GIF
+                            if (i === capturedImages.length - 1) {
+                                gif.on('finished', function(blob) {
+                                    // Create a download link for the GIF
+                                    const downloadUrl = URL.createObjectURL(blob);
+                                    const link = document.createElement('a');
+                                    link.href = downloadUrl;
+                                    link.download = 'luxe-photobooth.gif';
+                                    link.click();
+                                    
+                                    // Clean up
+                                    URL.revokeObjectURL(downloadUrl);
+                                    downloadBtn.textContent = 'Download';
+                                    downloadBtn.disabled = false;
+                                });
+                                
+                                gif.render();
+                            }
+                        };
+                        img.src = capturedImages[i];
+                    }
+                };
+                
+                processPhotos();
+            }
+        }
+    </script>
+</body>
+</html>
